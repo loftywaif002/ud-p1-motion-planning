@@ -13,3 +13,4 @@
 
 
 ##Starter Code Explanation
+Both backyard_flyer_solution.py and motion_planning.py are similar except their path finiding mechanism that the drone using to get to its goal.
