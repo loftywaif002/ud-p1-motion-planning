@@ -110,7 +110,20 @@ class MotionPlanning(Drone):
         print("Sending waypoints to simulator ...")
         data = msgpack.dumps(self.waypoints)
         self.connection._master.write(data)
-
+    #This method is responsible to read a file's first line 
+    def read_file(file):
+        with open(file) as fp:
+            #readline returning first line as string type 
+            line = fp.readline()
+            #split will return the string as a list 
+            first_line_list = line.split()
+            #For longitude and latitude we need the value at index 1 and 3 from the list
+            #print(first_line_list[1])
+            #print(first_line_list[3])
+            #get rid of the tailing comma in the string and returning two float values
+        return float(first_line_list[1].replace(',','')),float(first_line_list[3])
+       
+   
     def plan_path(self):
         self.flight_state = States.PLANNING
         print("Searching for a path ...")
@@ -119,14 +132,20 @@ class MotionPlanning(Drone):
 
         self.target_position[2] = TARGET_ALTITUDE
 
+        #Reading data from the csv file
+        data= 'colliders.csv'
+        
         # TODO: read lat0, lon0 from colliders into floating point values
-        
+        lat0, lon0 = read_file(data)
+        print('latitude is %f and longitude is %f' % (lat0, lon0))
         # TODO: set home position to (lon0, lat0, 0)
-
+        #self.set_home_position(lon0, lat0, 0)
         # TODO: retrieve current global position
- 
+        #local_position = (self.global_position, self.global_home) 
+        #print(local_position[0])
+        #print(local_position[1])
         # TODO: convert to current local position using global_to_local()
-        
+        #north, east, down = global_to_local(local_position[0],local_position[1])
         print('global home {0}, position {1}, local position {2}'.format(self.global_home, self.global_position,
                                                                          self.local_position))
         # Read in obstacle map
@@ -137,8 +156,11 @@ class MotionPlanning(Drone):
         print("North offset = {0}, east offset = {1}".format(north_offset, east_offset))
         # Define starting point on the grid (this is just grid center)
         grid_start = (-north_offset, -east_offset)
+        grid_start_north = int(np.floor(local_north - north_offset))
+        grid_start_east = int(np.floor(local_east - east_offset))
+
         # TODO: convert start position to current position rather than map center
-        
+        grid_start = (grid_start_north, grid_start_east)
         # Set goal as some arbitrary position on the grid
         grid_goal = (-north_offset + 10, -east_offset + 10)
         # TODO: adapt to set goal as latitude / longitude position and convert

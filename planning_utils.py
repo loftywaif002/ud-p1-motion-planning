@@ -88,6 +88,9 @@ def valid_actions(grid, current_node):
     return valid_actions
 
 
+
+
+
 def a_star(grid, h, start, goal):
 
     path = []
