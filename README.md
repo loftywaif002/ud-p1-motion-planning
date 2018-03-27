@@ -21,7 +21,7 @@ elif self.flight_state == States.PLANNING:
 ```
 Inside [`state_callback()`](./motion_planning.py#L61-L72) method, we are checking if the drone is armed, if it is, then we are calculatng the waypoints and then we are asking the drone to takeoff. In [`motion_planning.py`](./motion_planning.py)have [`plan_path()`](./motion_planning.py#L114-168) method to calculate the waypoints for the drone to get to the goal, that we are using in this [`method`](./motion_planning.py#L61-L72).
 
-# The [`plan_path()`](./motion_planning.py#L114-168) method is using several helper functions defined inside [`planning_utils.py`](./planning_utils.py)file to create the grid, calculating cost and heuristic as well as implmenting A* algorithm to calculate waypoints.
+The [`plan_path()`](./motion_planning.py#L114-168) method is using several helper functions defined inside [`planning_utils.py`](./planning_utils.py)file to create the grid, calculating cost and heuristic as well as implmenting A* algorithm to calculate waypoints.
 
 
 # [`plan_path()`](./motion_planning.py#L114-168) -> Explanation
