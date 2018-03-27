@@ -5,7 +5,7 @@ from enum import Enum, auto
 
 import numpy as np
 
-from planning_utils import a_star, heuristic, create_grid
+from planning_utils import a_star, heuristic, create_grid, read_file
 from udacidrone import Drone
 from udacidrone.connection import MavlinkConnection
 from udacidrone.messaging import MsgID
@@ -110,20 +110,7 @@ class MotionPlanning(Drone):
         print("Sending waypoints to simulator ...")
         data = msgpack.dumps(self.waypoints)
         self.connection._master.write(data)
-    #This method is responsible to read a file's first line 
-    def read_file(file):
-        with open(file) as fp:
-            #readline returning first line as string type 
-            line = fp.readline()
-            #split will return the string as a list 
-            first_line_list = line.split()
-            #For longitude and latitude we need the value at index 1 and 3 from the list
-            #print(first_line_list[1])
-            #print(first_line_list[3])
-            #get rid of the tailing comma in the string and returning two float values
-        return float(first_line_list[1].replace(',','')),float(first_line_list[3])
-       
-   
+
     def plan_path(self):
         self.flight_state = States.PLANNING
         print("Searching for a path ...")
@@ -136,8 +123,8 @@ class MotionPlanning(Drone):
         data= 'colliders.csv'
         
         # TODO: read lat0, lon0 from colliders into floating point values
-        lat0, lon0 = read_file(data)
-        print('latitude is %f and longitude is %f' % (lat0, lon0))
+        #lat0, lon0 = read_file(data)
+        #print('latitude is %f and longitude is %f' % (lat0, lon0))
         # TODO: set home position to (lon0, lat0, 0)
         #self.set_home_position(lon0, lat0, 0)
         # TODO: retrieve current global position
@@ -155,12 +142,12 @@ class MotionPlanning(Drone):
         grid, north_offset, east_offset = create_grid(data, TARGET_ALTITUDE, SAFETY_DISTANCE)
         print("North offset = {0}, east offset = {1}".format(north_offset, east_offset))
         # Define starting point on the grid (this is just grid center)
-        grid_start = (-north_offset, -east_offset)
-        grid_start_north = int(np.floor(local_north - north_offset))
-        grid_start_east = int(np.floor(local_east - east_offset))
+        #grid_start = (-north_offset, -east_offset)
+        #grid_start_north = int(np.floor(north - north_offset))
+        #grid_start_east = int(np.floor(east - east_offset))
 
         # TODO: convert start position to current position rather than map center
-        grid_start = (grid_start_north, grid_start_east)
+        #grid_start = (grid_start_north, grid_start_east)
         # Set goal as some arbitrary position on the grid
         grid_goal = (-north_offset + 10, -east_offset + 10)
         # TODO: adapt to set goal as latitude / longitude position and convert

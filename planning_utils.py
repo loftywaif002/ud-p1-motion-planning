@@ -87,7 +87,18 @@ def valid_actions(grid, current_node):
 
     return valid_actions
 
-
+    #This method is responsible to read a file's first line 
+def read_file(file):
+  with open(file) as fp: 
+   #readline returning first line as string type 
+   line = fp.readline()
+   #split will return the string as a list 
+   first_line_list = line.split()
+   #For longitude and latitude we need the value at index 1 and 3 from the list
+   #print(first_line_list[1])
+   #print(first_line_list[3])
+   #get rid of the tailing comma in the string and returning two float values
+   return float(first_line_list[1].replace(',','')),float(first_line_list[3])
 
 
 
