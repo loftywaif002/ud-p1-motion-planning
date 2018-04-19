@@ -52,7 +52,8 @@ The [`plan_path()`](./motion_planning_original.py#L114-168) method is using seve
 
 # Extended path planning Algorithm (My Implementation)
 
-
+#Rubric point
+### In the starter code, we assume that the home position is where the drone first initializes, but in reality, you need to be able to start planning from anywhere. Modify your code to read the global home location from the first line of the `colliders.csv.` file and set that position as global home (`self.set_home_position()`)
 Step 1: 
 
 The home position of the Drone is getting read in [motion_planning.py line 128](./motion_planning.py#L128). Here we are using the method read_file [`read_file`](./planning_utils.py#L128-L138) that is defined in `planning_utils.py`.
@@ -74,7 +75,9 @@ Here we retrive the current position using global_position and convert it to loc
 
 The Code for the transformation is defined here.[line 132](./motion_planning.py#L132)
 
-
+#Rubric point
+### In the starter code, the start point for planning is hardcoded as map center. Change this to be your current local position.
+#Solution:
 Step 3: 
 First we define a grid for a particular target altitude and safety margin around obstacles, in this case 5.This altidute and safety margin is our offset that we will use next.
 
@@ -85,6 +88,9 @@ To do that , We set the starting position by subtracting the calculated offset f
 This is done here:
 [line 146](./motion_planning.py#Line141) to [line 149](./motion_planning.py#Line#147)
 
+#Rubric Point
+### In the starter code, the goal position is hardcoded as some location 10 m north and 10 m east of map center. Modify this to be set as some arbitrary position on the grid given any geodetic coordinates (latitude, longitude)
+#Solution:
 Step 4: To set the goal coordinates, the comman line argument parsing library argparse is used to add parameters like latitude, longitude and altidues in [motion_planning.py](./motion_planning.py#L206-L208) to get the goal coordinates from the user.
 
 ```python
@@ -98,6 +104,9 @@ And we set the [goal_position argument](./motion_planning.py#L214)
 Passing goal positions from command line example:
 python motion_planning.py --goal_latitude 37.88  --goal_longitude -122.3 --goal_altitude 4
 
+#Rubric Point
+### Write your search algorithm. Minimum requirement here is to add diagonal motions to the A* implementation provided, and assign them a cost of sqrt(2). However, you're encouraged to get creative and try other methods from the lessons and beyond!
+#Solution:
 Step 5: For Diagonal movements, actions are added in the [planning_utils.py]
 (./planning_utils.py#L78-L81) file. After adding diagonal movements, the course of the path changes. The [valid_actions](./planning_utils.py#L92-L99) method is modified to add these actions.
 
